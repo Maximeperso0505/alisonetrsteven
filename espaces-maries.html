@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Espace organisation — Alison &amp; Steven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{
+    --paper: #F5EFE4;
+    --paper-deep: #EAE0CC;
+    --ink: #2A2420;
+    --ink-soft: #5B5248;
+    --sage: #7D8C6C;
+    --rose: #C79C93;
+    --gold: #A9834F;
+    --line: rgba(42,36,32,0.18);
+    --error: #B3543F;
+  }
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family:'Jost', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .wrap{ max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+  header.top{
+    text-align:center;
+    padding: 56px 0 30px;
+  }
+  header.top .kicker{
+    font-size: 14px; color: var(--sage); margin: 0 0 10px;
+  }
+  header.top h1{
+    font-family:'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(30px, 6vw, 42px);
+    margin: 0;
+  }
+
+  /* ---- Login / signup ---- */
+  .auth-box{
+    max-width: 380px;
+    margin: 30px auto 0;
+    padding: 34px 30px;
+    background: #FFFDF8;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+  }
+  .auth-box h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size: 26px;
+    margin: 0 0 22px;
+    text-align:center;
+  }
+  .field{ margin-bottom: 16px; }
+  .field label{
+    display:block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px;
+  }
+  .field input{
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--paper);
+    font-family:'Jost', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .field input:focus{ outline: 2px solid var(--sage); outline-offset: 1px; }
+
+  button{
+    font-family:'Jost', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 2px;
+  }
+  .btn-primary{
+    width: 100%;
+    padding: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    margin-top: 6px;
+  }
+  .btn-primary:hover{ background: var(--sage); }
+  .btn-primary:disabled{ opacity: 0.5; cursor: default; }
+
+  .switch-mode{
+    text-align:center;
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .switch-mode a{ color: var(--sage); cursor:pointer; text-decoration: underline; }
+
+  .msg{
+    text-align:center;
+    font-size: 14px;
+    margin-top: 14px;
+    min-height: 18px;
+  }
+  .msg.error{ color: var(--error); }
+  .msg.ok{ color: var(--sage); }
+
+  /* ---- App shell (post-login) ---- */
+  .app-header{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 24px 0 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .app-header .who{ font-size: 14px; color: var(--ink-soft); }
+  .app-header .who strong{ color: var(--ink); font-weight: 500; }
+
+  .tabs{ display:flex; gap: 8px; }
+  .tab-btn{
+    padding: 8px 16px;
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    font-size: 13px;
+  }
+  .tab-btn.active{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .signout{
+    background:none; color: var(--ink-soft); font-size: 13px; text-decoration: underline;
+    padding: 4px;
+  }
+
+  /* ---- Questionnaire ---- */
+  .cat{ margin-bottom: 44px; }
+  .cat h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--gold);
+    margin: 0 0 20px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+  }
+  .q{ margin-bottom: 22px; }
+  .q .q-label{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 19px;
+    line-height: 1.4;
+    margin: 0 0 4px;
+  }
+  .q .q-mode{
+    font-size: 12px;
+    color: var(--sage);
+    margin: 0 0 8px;
+  }
+  .q textarea{
+    width: 100%;
+    min-height: 70px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: #FFFDF8;
+    font-family:'Jost', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    resize: vertical;
+  }
+  .q textarea:focus{ outline: 2px solid var(--sage); outline-offset: 1px; }
+  .q .save-state{
+    font-size: 12px;
+    color: var(--ink-soft);
+    height: 16px;
+    margin-top: 4px;
+  }
+  .q .save-state.saved{ color: var(--sage); }
+
+  /* ---- Admin view ---- */
+  .member-block{
+    margin-bottom: 50px;
+    padding-bottom: 40px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .member-block h2{
+    font-family:'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: 28px;
+    margin: 0 0 4px;
+  }
+  .member-block .member-email{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+  }
+  .a-cat h3{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--gold);
+    margin: 24px 0 12px;
+  }
+  .a-q{ margin-bottom: 14px; }
+  .a-q .a-q-label{ font-size: 14px; color: var(--ink-soft); margin: 0 0 4px; }
+  .a-q .a-q-answer{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 18px;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+  .a-q .a-q-answer.empty{ color: var(--ink-soft); font-style: italic; font-family:'Jost',sans-serif; font-size: 14px; }
+
+  .loading, .hidden{ display:none; }
+  .center-note{ text-align:center; color: var(--ink-soft); padding: 40px 0; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">espace privé</p>
+    <h1>Organisation de la cérémonie</h1>
+  </header>
+
+  <!-- AUTH -->
+  <div id="auth-view">
+    <div class="auth-box">
+      <h2 id="auth-title">Connexion</h2>
+
+      <div class="field hidden" id="name-field">
+        <label for="full-name">Ton prénom</label>
+        <input type="text" id="full-name" autocomplete="name" placeholder="Alison">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" autocomplete="current-password">
+      </div>
+
+      <button class="btn-primary" id="auth-submit">Se connecter</button>
+      <p class="msg" id="auth-msg"></p>
+
+      <p class="switch-mode">
+        <span id="switch-to-signup-wrap">Pas encore de compte ? <a id="switch-to-signup">Crée-en un</a></span>
+        <span id="switch-to-login-wrap" class="hidden">Déjà un compte ? <a id="switch-to-login">Connecte-toi</a></span>
+      </p>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app-view" class="hidden">
+    <div class="app-header">
+      <div class="who">Connecté·e en tant que <strong id="who-name">…</strong></div>
+      <div style="display:flex; align-items:center; gap:14px;">
+        <div class="tabs" id="tabs"></div>
+        <button class="signout" id="signout-btn">Se déconnecter</button>
+      </div>
+    </div>
+
+    <div id="form-view"></div>
+    <div id="admin-view" class="hidden"></div>
+  </div>
+</div>
+
+<script>
+// ====== CONFIG ======
+const SUPABASE_URL = "https://nasofshyzexjnqvxhiki.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hc29mc2h5emV4am5xdnhoaWtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NjE4NTUsImV4cCI6MjEwNDMzNzg1NX0.IPPlHwt2HjMDK0TEGqwXerBM8J0CelQxcthrM5vhkIo";
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ====== QUESTIONNAIRE DATA ======
+const CATEGORIES = [
+  {
+    title: "Préparation de la cérémonie",
+    questions: [
+      { id: "rencontre", label: "Racontez votre rencontre", mode: "seul" },
+      { id: "premiere-impression", label: "Qu'avez-vous pensé de l'autre en la / le voyant la première fois ?", mode: "seul" },
+      { id: "dit-a-amies", label: "Qu'avez-vous dit à son sujet à vos amies à cette époque ?", mode: "seul" },
+      { id: "anecdote-debut", label: "Une anecdote marquante de la période qui a précédé les débuts de votre relation ?", mode: "seul" },
+    ]
+  },
+  {
+    title: "Le couple",
+    questions: [
+      { id: "aimez-chez-autre", label: "Qu'est-ce que vous aimez chez elle / lui ?", mode: "seul" },
+      { id: "differences", label: "En quoi êtes-vous différent·e·s ?", mode: "seul" },
+      { id: "enerve", label: "Qu'est-ce qui t'énerve chez elle / lui ?", mode: "seul" },
+      { id: "valeurs", label: "Quelles sont les valeurs essentielles que vous partagez ?", mode: "seul" },
+      { id: "craquer", label: "Qu'est-ce qui te fait craquer chez elle / lui ?", mode: "seul" },
+      { id: "appris", label: "Qu'avez-vous appris à ses côtés ?", mode: "seul" },
+    ]
+  },
+  {
+    title: "L'histoire",
+    questions: [
+      { id: "preuve-amour", label: "Quelle est la plus belle preuve d'amour qu'elle / il vous ait donnée ?", mode: "seul" },
+      { id: "petits-bonheurs", label: "Décrivez votre ou vos petit(s) bonheur(s) du quotidien", mode: "seul" },
+      { id: "aventures", label: "Quelle(s) grande(s) aventure(s) avez-vous menée(s) ensemble ?", mode: "seul" },
+      { id: "epreuves", label: "Quelle(s) épreuve(s) avez-vous surmontée(s) ensemble ?", mode: "seul" },
+    ]
+  },
+  {
+    title: "Le mariage",
+    questions: [
+      { id: "pourquoi-marier", label: "Pourquoi avez-vous décidé de vous marier ?", mode: "seul" },
+      { id: "signification-union", label: "Que signifie cette union pour vous ?", mode: "seul" },
+      { id: "confiance-lien", label: "Qu'est-ce qui vous donne confiance en ce lien qui vous unit et en ce mariage à venir ?", mode: "seul" },
+    ]
+  },
+  {
+    title: "L'avenir",
+    questions: [
+      { id: "dans-20-ans", label: "Comment imaginez-vous votre couple dans 20 ans ?", mode: "ensemble" },
+      { id: "projet-fou", label: "Un projet fou à réaliser ensemble ?", mode: "ensemble" },
+      { id: "promesse", label: "Que souhaitez-vous lui promettre ?", mode: "ensemble" },
+    ]
+  },
+  {
+    title: "Votre cérémonie idéale",
+    questions: [
+      { id: "trois-mots", label: "À chaud, citez 3 mots pour décrire votre cérémonie d'engagement idéale", mode: "ensemble" },
+      { id: "partager-ceremonie", label: "Que souhaitez-vous partager à travers cette cérémonie ?", mode: "ensemble" },
+      { id: "rituels", label: "Les rituels, traditions ou passages indispensables à vos yeux ?", mode: "ensemble" },
+      { id: "discours-qui", label: "Idéalement, de qui voudriez-vous recevoir un discours ou tout type de participation ?", mode: "ensemble" },
+      { id: "sujets-eviter", label: "Lors des discours, est-ce qu'il y a des sujets que vous ne voulez pas voir abordés ?", mode: "seul" },
+    ]
+  },
+];
+
+const MODE_LABEL = { seul: "À répondre seul·e", ensemble: "À répondre seul·e ou ensemble" };
+
+// ====== STATE ======
+let currentUser = null;
+let currentProfile = null;
+let activeTab = "form";
+
+// ====== DOM refs ======
+const authView = document.getElementById('auth-view');
+const appView = document.getElementById('app-view');
+const authTitle = document.getElementById('auth-title');
+const nameField = document.getElementById('name-field');
+const fullNameInput = document.getElementById('full-name');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const authSubmit = document.getElementById('auth-submit');
+const authMsg = document.getElementById('auth-msg');
+const switchToSignupWrap = document.getElementById('switch-to-signup-wrap');
+const switchToLoginWrap = document.getElementById('switch-to-login-wrap');
+const whoName = document.getElementById('who-name');
+const tabsEl = document.getElementById('tabs');
+const formView = document.getElementById('form-view');
+const adminView = document.getElementById('admin-view');
+
+let mode = 'login'; // or 'signup'
+
+document.getElementById('switch-to-signup').addEventListener('click', () => setMode('signup'));
+document.getElementById('switch-to-login').addEventListener('click', () => setMode('login'));
+
+function setMode(m){
+  mode = m;
+  authMsg.textContent = '';
+  if(m === 'signup'){
+    authTitle.textContent = 'Créer un compte';
+    authSubmit.textContent = "S'inscrire";
+    nameField.classList.remove('hidden');
+    switchToSignupWrap.classList.add('hidden');
+    switchToLoginWrap.classList.remove('hidden');
+  } else {
+    authTitle.textContent = 'Connexion';
+    authSubmit.textContent = 'Se connecter';
+    nameField.classList.add('hidden');
+    switchToSignupWrap.classList.remove('hidden');
+    switchToLoginWrap.classList.add('hidden');
+  }
+}
+
+authSubmit.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  authMsg.className = 'msg';
+  authMsg.textContent = '';
+
+  if(!email || !password){
+    authMsg.className = 'msg error';
+    authMsg.textContent = 'Merci de remplir email et mot de passe.';
+    return;
+  }
+
+  authSubmit.disabled = true;
+  try{
+    if(mode === 'signup'){
+      const fullName = fullNameInput.value.trim();
+      const { data, error } = await sb.auth.signUp({
+        email, password,
+        options: { data: { full_name: fullName } }
+      });
+      if(error) throw error;
+      if(data.session){
+        // email confirmation disabled -> logged in immediately
+      } else {
+        authMsg.className = 'msg ok';
+        authMsg.textContent = "Compte créé ! Vérifie ta boîte mail pour confirmer, puis connecte-toi.";
+        authSubmit.disabled = false;
+        return;
+      }
+    } else {
+      const { error } = await sb.auth.signInWithPassword({ email, password });
+      if(error) throw error;
+    }
+  } catch(err){
+    authMsg.className = 'msg error';
+    authMsg.textContent = err.message || "Une erreur est survenue.";
+    authSubmit.disabled = false;
+    return;
+  }
+  authSubmit.disabled = false;
+});
+
+document.getElementById('signout-btn').addEventListener('click', async () => {
+  await sb.auth.signOut();
+});
+
+sb.auth.onAuthStateChange((_event, session) => {
+  if(session){
+    handleLoggedIn(session.user);
+  } else {
+    currentUser = null;
+    currentProfile = null;
+    authView.classList.remove('hidden');
+    appView.classList.add('hidden');
+  }
+});
+
+async function handleLoggedIn(user){
+  currentUser = user;
+  const { data: profile, error } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if(error){
+    console.error(error);
+  }
+  currentProfile = profile;
+
+  authView.classList.add('hidden');
+  appView.classList.remove('hidden');
+  whoName.textContent = (profile && profile.full_name) ? profile.full_name : user.email;
+
+  renderTabs();
+  activeTab = 'form';
+  showTab('form');
+}
+
+function renderTabs(){
+  tabsEl.innerHTML = '';
+  const formBtn = document.createElement('button');
+  formBtn.className = 'tab-btn active';
+  formBtn.textContent = 'Mon formulaire';
+  formBtn.addEventListener('click', () => showTab('form'));
+  tabsEl.appendChild(formBtn);
+
+  if(currentProfile && currentProfile.is_admin){
+    const adminBtn = document.createElement('button');
+    adminBtn.className = 'tab-btn';
+    adminBtn.textContent = 'Vue admin';
+    adminBtn.addEventListener('click', () => showTab('admin'));
+    tabsEl.appendChild(adminBtn);
+  }
+}
+
+function showTab(tab){
+  activeTab = tab;
+  [...tabsEl.children].forEach((btn, i) => {
+    btn.classList.toggle('active', (tab === 'form' && i === 0) || (tab === 'admin' && i === 1));
+  });
+  formView.classList.toggle('hidden', tab !== 'form');
+  adminView.classList.toggle('hidden', tab !== 'admin');
+  if(tab === 'form') renderForm();
+  if(tab === 'admin') renderAdmin();
+}
+
+// ====== FORM (own answers) ======
+async function renderForm(){
+  formView.innerHTML = '<p class="center-note">Chargement…</p>';
+
+  const { data: answers, error } = await sb
+    .from('ceremony_answers')
+    .select('question_id, answer')
+    .eq('user_id', currentUser.id);
+
+  if(error){
+    formView.innerHTML = '<p class="center-note">Erreur de chargement. Recharge la page.</p>';
+    console.error(error);
+    return;
+  }
+
+  const answerMap = {};
+  (answers || []).forEach(a => { answerMap[a.question_id] = a.answer; });
+
+  formView.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const catEl = document.createElement('div');
+    catEl.className = 'cat';
+    const h2 = document.createElement('h2');
+    h2.textContent = cat.title;
+    catEl.appendChild(h2);
+
+    cat.questions.forEach(q => {
+      const qEl = document.createElement('div');
+      qEl.className = 'q';
+      qEl.innerHTML = `
+        <p class="q-label">${q.label}</p>
+        <p class="q-mode">${MODE_LABEL[q.mode]}</p>
+        <textarea data-qid="${q.id}" placeholder="Ta réponse…"></textarea>
+        <p class="save-state"></p>
+      `;
+      const textarea = qEl.querySelector('textarea');
+      textarea.value = answerMap[q.id] || '';
+      const saveState = qEl.querySelector('.save-state');
+
+      let debounceTimer;
+      textarea.addEventListener('input', () => {
+        saveState.textContent = 'Frappe en cours…';
+        saveState.classList.remove('saved');
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => saveAnswer(q.id, textarea.value, saveState), 900);
+      });
+      textarea.addEventListener('blur', () => {
+        clearTimeout(debounceTimer);
+        saveAnswer(q.id, textarea.value, saveState);
+      });
+
+      catEl.appendChild(qEl);
+    });
+
+    formView.appendChild(catEl);
+  });
+}
+
+async function saveAnswer(questionId, value, saveStateEl){
+  saveStateEl.textContent = 'Enregistrement…';
+  const { error } = await sb
+    .from('ceremony_answers')
+    .upsert({
+      user_id: currentUser.id,
+      question_id: questionId,
+      answer: value,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,question_id' });
+
+  if(error){
+    saveStateEl.textContent = "Erreur d'enregistrement";
+    console.error(error);
+  } else {
+    saveStateEl.textContent = 'Enregistré ✓';
+    saveStateEl.classList.add('saved');
+  }
+}
+
+// ====== ADMIN VIEW ======
+async function renderAdmin(){
+  adminView.innerHTML = '<p class="center-note">Chargement…</p>';
+
+  const { data: profiles, error: pErr } = await sb.from('profiles').select('*');
+  const { data: answers, error: aErr } = await sb.from('ceremony_answers').select('*');
+
+  if(pErr || aErr){
+    adminView.innerHTML = '<p class="center-note">Erreur de chargement.</p>';
+    console.error(pErr, aErr);
+    return;
+  }
+
+  const answersByUser = {};
+  (answers || []).forEach(a => {
+    if(!answersByUser[a.user_id]) answersByUser[a.user_id] = {};
+    answersByUser[a.user_id][a.question_id] = a.answer;
+  });
+
+  adminView.innerHTML = '';
+  (profiles || []).forEach(profile => {
+    const userAnswers = answersByUser[profile.id] || {};
+    const block = document.createElement('div');
+    block.className = 'member-block';
+    block.innerHTML = `
+      <h2>${profile.full_name || '(sans nom)'}</h2>
+      <p class="member-email">${profile.is_admin ? 'Admin' : 'Membre'}</p>
+    `;
+
+    CATEGORIES.forEach(cat => {
+      const catBlock = document.createElement('div');
+      catBlock.className = 'a-cat';
+      const h3 = document.createElement('h3');
+      h3.textContent = cat.title;
+      catBlock.appendChild(h3);
+
+      cat.questions.forEach(q => {
+        const val = userAnswers[q.id];
+        const qBlock = document.createElement('div');
+        qBlock.className = 'a-q';
+        qBlock.innerHTML = `
+          <p class="a-q-label">${q.label}</p>
+          <p class="a-q-answer ${val ? '' : 'empty'}">${val ? escapeHtml(val) : '(pas encore répondu)'}</p>
+        `;
+        catBlock.appendChild(qBlock);
+      });
+
+      block.appendChild(catBlock);
+    });
+
+    adminView.appendChild(block);
+  });
+}
+
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ====== INIT ======
+(async function init(){
+  const { data: { session } } = await sb.auth.getSession();
+  if(session){
+    handleLoggedIn(session.user);
+  }
+})();
+</script>
+
+</body>
+</html>
