@@ -254,11 +254,6 @@
 
       <button class="btn-primary" id="auth-submit">Se connecter</button>
       <p class="msg" id="auth-msg"></p>
-
-      <p class="switch-mode">
-        <span id="switch-to-signup-wrap">Pas encore de compte ? <a id="switch-to-signup">Crée-en un</a></span>
-        <span id="switch-to-login-wrap" class="hidden">Déjà un compte ? <a id="switch-to-login">Connecte-toi</a></span>
-      </p>
     </div>
   </div>
 
@@ -360,35 +355,10 @@ const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const authSubmit = document.getElementById('auth-submit');
 const authMsg = document.getElementById('auth-msg');
-const switchToSignupWrap = document.getElementById('switch-to-signup-wrap');
-const switchToLoginWrap = document.getElementById('switch-to-login-wrap');
 const whoName = document.getElementById('who-name');
 const tabsEl = document.getElementById('tabs');
 const formView = document.getElementById('form-view');
 const adminView = document.getElementById('admin-view');
-
-let mode = 'login'; // or 'signup'
-
-document.getElementById('switch-to-signup').addEventListener('click', () => setMode('signup'));
-document.getElementById('switch-to-login').addEventListener('click', () => setMode('login'));
-
-function setMode(m){
-  mode = m;
-  authMsg.textContent = '';
-  if(m === 'signup'){
-    authTitle.textContent = 'Créer un compte';
-    authSubmit.textContent = "S'inscrire";
-    nameField.classList.remove('hidden');
-    switchToSignupWrap.classList.add('hidden');
-    switchToLoginWrap.classList.remove('hidden');
-  } else {
-    authTitle.textContent = 'Connexion';
-    authSubmit.textContent = 'Se connecter';
-    nameField.classList.add('hidden');
-    switchToSignupWrap.classList.remove('hidden');
-    switchToLoginWrap.classList.add('hidden');
-  }
-}
 
 authSubmit.addEventListener('click', async () => {
   const email = emailInput.value.trim();
@@ -404,25 +374,8 @@ authSubmit.addEventListener('click', async () => {
 
   authSubmit.disabled = true;
   try{
-    if(mode === 'signup'){
-      const fullName = fullNameInput.value.trim();
-      const { data, error } = await sb.auth.signUp({
-        email, password,
-        options: { data: { full_name: fullName } }
-      });
-      if(error) throw error;
-      if(data.session){
-        // email confirmation disabled -> logged in immediately
-      } else {
-        authMsg.className = 'msg ok';
-        authMsg.textContent = "Compte créé ! Vérifie ta boîte mail pour confirmer, puis connecte-toi.";
-        authSubmit.disabled = false;
-        return;
-      }
-    } else {
-      const { error } = await sb.auth.signInWithPassword({ email, password });
-      if(error) throw error;
-    }
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    if(error) throw error;
   } catch(err){
     authMsg.className = 'msg error';
     authMsg.textContent = err.message || "Une erreur est survenue.";
