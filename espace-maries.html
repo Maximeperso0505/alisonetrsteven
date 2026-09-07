@@ -11,7 +11,6 @@
 <style>
   :root{
     --paper: #F5EFE4;
-    --paper-deep: #EAE0CC;
     --ink: #2A2420;
     --ink-soft: #5B5248;
     --sage: #7D8C6C;
@@ -30,15 +29,10 @@
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
   }
-  .wrap{ max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+  .wrap{ max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
 
-  header.top{
-    text-align:center;
-    padding: 56px 0 30px;
-  }
-  header.top .kicker{
-    font-size: 14px; color: var(--sage); margin: 0 0 10px;
-  }
+  header.top{ text-align:center; padding: 56px 0 30px; }
+  header.top .kicker{ font-size: 14px; color: var(--sage); margin: 0 0 10px; }
   header.top h1{
     font-family:'Cormorant Garamond', serif;
     font-weight: 500;
@@ -46,184 +40,113 @@
     margin: 0;
   }
 
-  /* ---- Login / signup ---- */
   .auth-box{
-    max-width: 380px;
-    margin: 30px auto 0;
-    padding: 34px 30px;
-    background: #FFFDF8;
-    border: 1px solid var(--line);
-    border-radius: 3px;
+    max-width: 380px; margin: 30px auto 0; padding: 34px 30px;
+    background: #FFFDF8; border: 1px solid var(--line); border-radius: 3px;
   }
   .auth-box h2{
-    font-family:'Cormorant Garamond', serif;
-    font-weight:500;
-    font-size: 26px;
-    margin: 0 0 22px;
-    text-align:center;
+    font-family:'Cormorant Garamond', serif; font-weight:500; font-size: 26px;
+    margin: 0 0 22px; text-align:center;
   }
   .field{ margin-bottom: 16px; }
-  .field label{
-    display:block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px;
-  }
+  .field label{ display:block; font-size: 13px; color: var(--ink-soft); margin-bottom: 6px; }
   .field input{
-    width: 100%;
-    padding: 11px 12px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    background: var(--paper);
-    font-family:'Jost', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
+    width: 100%; padding: 11px 12px; border: 1px solid var(--line); border-radius: 2px;
+    background: var(--paper); font-family:'Jost', sans-serif; font-size: 15px; color: var(--ink);
   }
   .field input:focus{ outline: 2px solid var(--sage); outline-offset: 1px; }
 
   button{
-    font-family:'Jost', sans-serif;
-    font-weight: 500;
-    font-size: 15px;
-    cursor: pointer;
-    border: none;
-    border-radius: 2px;
+    font-family:'Jost', sans-serif; font-weight: 500; font-size: 15px;
+    cursor: pointer; border: none; border-radius: 2px;
   }
-  .btn-primary{
-    width: 100%;
-    padding: 12px;
-    background: var(--ink);
-    color: var(--paper);
-    margin-top: 6px;
-  }
+  .btn-primary{ width: 100%; padding: 12px; background: var(--ink); color: var(--paper); margin-top: 6px; }
   .btn-primary:hover{ background: var(--sage); }
   .btn-primary:disabled{ opacity: 0.5; cursor: default; }
+  .btn-small{ padding: 7px 14px; font-size: 13px; background: var(--ink); color: var(--paper); border-radius: 20px; }
+  .btn-small:hover{ background: var(--sage); }
+  .btn-ghost{ padding: 6px 12px; font-size: 12px; background: transparent; color: var(--ink-soft); border: 1px solid var(--line); border-radius: 20px; }
+  .btn-ghost:hover{ border-color: var(--ink-soft); color: var(--ink); }
+  .btn-danger{ padding: 6px 12px; font-size: 12px; background: transparent; color: var(--error); border: 1px solid var(--error); border-radius: 20px; }
 
-  .switch-mode{
-    text-align:center;
-    margin-top: 18px;
-    font-size: 14px;
-    color: var(--ink-soft);
-  }
-  .switch-mode a{ color: var(--sage); cursor:pointer; text-decoration: underline; }
-
-  .msg{
-    text-align:center;
-    font-size: 14px;
-    margin-top: 14px;
-    min-height: 18px;
-  }
+  .msg{ text-align:center; font-size: 14px; margin-top: 14px; min-height: 18px; }
   .msg.error{ color: var(--error); }
   .msg.ok{ color: var(--sage); }
 
-  /* ---- App shell (post-login) ---- */
   .app-header{
-    display:flex;
-    justify-content: space-between;
-    align-items:center;
-    padding: 24px 0 10px;
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 30px;
-    flex-wrap: wrap;
-    gap: 10px;
+    display:flex; justify-content: space-between; align-items:center;
+    padding: 24px 0 16px; border-bottom: 1px solid var(--line); margin-bottom: 30px;
+    flex-wrap: wrap; gap: 12px;
   }
   .app-header .who{ font-size: 14px; color: var(--ink-soft); }
   .app-header .who strong{ color: var(--ink); font-weight: 500; }
+  .app-header .who .role-tag{
+    display:inline-block; margin-left: 8px; font-size: 11px; padding: 2px 9px;
+    border-radius: 20px; border: 1px solid var(--gold); color: var(--gold);
+  }
 
-  .tabs{ display:flex; gap: 8px; }
+  .tabs{ display:flex; gap: 8px; flex-wrap: wrap; }
   .tab-btn{
-    padding: 8px 16px;
-    background: transparent;
-    color: var(--ink-soft);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    font-size: 13px;
+    padding: 8px 16px; background: transparent; color: var(--ink-soft);
+    border: 1px solid var(--line); border-radius: 20px; font-size: 13px;
   }
   .tab-btn.active{ background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
-  .signout{
-    background:none; color: var(--ink-soft); font-size: 13px; text-decoration: underline;
-    padding: 4px;
-  }
+  .signout{ background:none; color: var(--ink-soft); font-size: 13px; text-decoration: underline; padding: 4px; }
 
-  /* ---- Questionnaire ---- */
   .cat{ margin-bottom: 44px; }
   .cat h2{
-    font-family:'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-style: italic;
-    font-size: 24px;
-    color: var(--gold);
-    margin: 0 0 20px;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 10px;
+    font-family:'Cormorant Garamond', serif; font-weight: 500; font-style: italic; font-size: 24px;
+    color: var(--gold); margin: 0 0 20px; border-bottom: 1px solid var(--line); padding-bottom: 10px;
   }
   .q{ margin-bottom: 22px; }
-  .q .q-label{
-    font-family:'Cormorant Garamond', serif;
-    font-size: 19px;
-    line-height: 1.4;
-    margin: 0 0 4px;
+  .q .q-label{ font-family:'Cormorant Garamond', serif; font-size: 19px; line-height: 1.4; margin: 0 0 4px; }
+  .q .q-mode{ font-size: 12px; color: var(--sage); margin: 0 0 8px; }
+  textarea{
+    width: 100%; min-height: 70px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 2px;
+    background: #FFFDF8; font-family:'Jost', sans-serif; font-size: 15px; color: var(--ink); resize: vertical;
   }
-  .q .q-mode{
-    font-size: 12px;
-    color: var(--sage);
-    margin: 0 0 8px;
-  }
-  .q textarea{
-    width: 100%;
-    min-height: 70px;
-    padding: 10px 12px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    background: #FFFDF8;
-    font-family:'Jost', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
-    resize: vertical;
-  }
-  .q textarea:focus{ outline: 2px solid var(--sage); outline-offset: 1px; }
-  .q .save-state{
-    font-size: 12px;
-    color: var(--ink-soft);
-    height: 16px;
-    margin-top: 4px;
-  }
-  .q .save-state.saved{ color: var(--sage); }
+  textarea:focus{ outline: 2px solid var(--sage); outline-offset: 1px; }
+  .save-state{ font-size: 12px; color: var(--ink-soft); height: 16px; margin-top: 4px; }
+  .save-state.saved{ color: var(--sage); }
 
-  /* ---- Admin view ---- */
-  .member-block{
-    margin-bottom: 50px;
-    padding-bottom: 40px;
-    border-bottom: 1px dashed var(--line);
-  }
-  .member-block h2{
-    font-family:'Cormorant Garamond', serif;
-    font-weight: 500;
-    font-size: 28px;
-    margin: 0 0 4px;
-  }
-  .member-block .member-email{
-    font-size: 13px;
-    color: var(--ink-soft);
-    margin: 0 0 24px;
-  }
-  .a-cat h3{
-    font-family:'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 19px;
-    color: var(--gold);
-    margin: 24px 0 12px;
-  }
+  .member-block{ margin-bottom: 50px; padding-bottom: 40px; border-bottom: 1px dashed var(--line); }
+  .member-block h2{ font-family:'Cormorant Garamond', serif; font-weight: 500; font-size: 28px; margin: 0 0 4px; }
+  .member-block .member-role{ font-size: 13px; color: var(--ink-soft); margin: 0 0 24px; }
+  .a-cat h3{ font-family:'Cormorant Garamond', serif; font-style: italic; font-size: 19px; color: var(--gold); margin: 24px 0 12px; }
   .a-q{ margin-bottom: 14px; }
   .a-q .a-q-label{ font-size: 14px; color: var(--ink-soft); margin: 0 0 4px; }
-  .a-q .a-q-answer{
-    font-family:'Cormorant Garamond', serif;
-    font-size: 18px;
-    margin: 0;
-    white-space: pre-wrap;
-  }
+  .a-q .a-q-answer{ font-family:'Cormorant Garamond', serif; font-size: 18px; margin: 0; white-space: pre-wrap; }
   .a-q .a-q-answer.empty{ color: var(--ink-soft); font-style: italic; font-family:'Jost',sans-serif; font-size: 14px; }
 
-  .loading, .hidden{ display:none; }
+  .section-title{ font-family:'Cormorant Garamond', serif; font-weight: 500; font-size: 28px; margin: 0 0 24px; }
+
+  .day-tabs{ display:flex; gap: 8px; margin-bottom: 26px; }
+  .day-tab{ padding: 8px 18px; border: 1px solid var(--line); border-radius: 20px; background: #FFFDF8; color: var(--ink-soft); font-size: 14px; }
+  .day-tab.active{ background: var(--sage); color: #fff; border-color: var(--sage); }
+
+  .task-card{
+    background: #FFFDF8; border: 1px solid var(--line); border-radius: 3px;
+    padding: 16px 18px; margin-bottom: 12px;
+  }
+  .task-card .task-top{ display:flex; justify-content: space-between; align-items:flex-start; gap: 10px; }
+  .task-card .task-time{ font-size: 12px; color: var(--gold); margin: 0 0 4px; }
+  .task-card .task-title{ font-family:'Cormorant Garamond', serif; font-size: 20px; margin: 0 0 6px; }
+  .task-card .task-desc{ font-size: 14px; color: var(--ink-soft); margin: 0 0 8px; white-space: pre-wrap; }
+  .task-card .task-assignees{ display:flex; gap: 6px; flex-wrap: wrap; }
+  .chip{ font-size: 12px; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 3px 10px; color: var(--ink-soft); }
+  .task-actions{ display:flex; gap: 6px; flex-shrink: 0; }
+
+  .add-task-btn{ margin-bottom: 20px; }
+  .task-form{
+    background: #FFFDF8; border: 1px dashed var(--gold); border-radius: 3px; padding: 18px; margin-bottom: 20px;
+  }
+  .task-form .field{ margin-bottom: 12px; }
+  .task-form-actions{ display:flex; gap: 10px; }
+
+  .empty-note{ color: var(--ink-soft); font-size: 14px; font-style: italic; padding: 10px 0 20px; }
   .center-note{ text-align:center; color: var(--ink-soft); padding: 40px 0; }
+  .hidden{ display:none; }
 </style>
 </head>
 <body>
@@ -231,18 +154,12 @@
 <div class="wrap">
   <header class="top">
     <p class="kicker">espace privé</p>
-    <h1>Organisation de la cérémonie</h1>
+    <h1>Organisation du mariage</h1>
   </header>
 
-  <!-- AUTH -->
   <div id="auth-view">
     <div class="auth-box">
-      <h2 id="auth-title">Connexion</h2>
-
-      <div class="field hidden" id="name-field">
-        <label for="full-name">Ton prénom</label>
-        <input type="text" id="full-name" autocomplete="name" placeholder="Alison">
-      </div>
+      <h2>Connexion</h2>
       <div class="field">
         <label for="email">Email</label>
         <input type="email" id="email" autocomplete="email">
@@ -251,334 +168,422 @@
         <label for="password">Mot de passe</label>
         <input type="password" id="password" autocomplete="current-password">
       </div>
-
       <button class="btn-primary" id="auth-submit">Se connecter</button>
       <p class="msg" id="auth-msg"></p>
     </div>
   </div>
 
-  <!-- APP -->
   <div id="app-view" class="hidden">
     <div class="app-header">
-      <div class="who">Connecté·e en tant que <strong id="who-name">…</strong></div>
+      <div class="who">Connecté·e en tant que <strong id="who-name">…</strong><span class="role-tag" id="who-role"></span></div>
       <div style="display:flex; align-items:center; gap:14px;">
         <div class="tabs" id="tabs"></div>
         <button class="signout" id="signout-btn">Se déconnecter</button>
       </div>
     </div>
-
-    <div id="form-view"></div>
-    <div id="admin-view" class="hidden"></div>
+    <div id="tab-content"></div>
   </div>
 </div>
 
 <script>
-// ====== CONFIG ======
 const SUPABASE_URL = "https://nasofshyzexjnqvxhiki.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hc29mc2h5emV4am5xdnhoaWtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg3NjE4NTUsImV4cCI6MjEwNDMzNzg1NX0.IPPlHwt2HjMDK0TEGqwXerBM8J0CelQxcthrM5vhkIo";
-
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ====== QUESTIONNAIRE DATA ======
 const CATEGORIES = [
-  {
-    title: "Préparation de la cérémonie",
-    questions: [
-      { id: "rencontre", label: "Racontez votre rencontre", mode: "seul" },
-      { id: "premiere-impression", label: "Qu'avez-vous pensé de l'autre en la / le voyant la première fois ?", mode: "seul" },
-      { id: "dit-a-amies", label: "Qu'avez-vous dit à son sujet à vos amies à cette époque ?", mode: "seul" },
-      { id: "anecdote-debut", label: "Une anecdote marquante de la période qui a précédé les débuts de votre relation ?", mode: "seul" },
-    ]
-  },
-  {
-    title: "Le couple",
-    questions: [
-      { id: "aimez-chez-autre", label: "Qu'est-ce que vous aimez chez elle / lui ?", mode: "seul" },
-      { id: "differences", label: "En quoi êtes-vous différent·e·s ?", mode: "seul" },
-      { id: "enerve", label: "Qu'est-ce qui t'énerve chez elle / lui ?", mode: "seul" },
-      { id: "valeurs", label: "Quelles sont les valeurs essentielles que vous partagez ?", mode: "seul" },
-      { id: "craquer", label: "Qu'est-ce qui te fait craquer chez elle / lui ?", mode: "seul" },
-      { id: "appris", label: "Qu'avez-vous appris à ses côtés ?", mode: "seul" },
-    ]
-  },
-  {
-    title: "L'histoire",
-    questions: [
-      { id: "preuve-amour", label: "Quelle est la plus belle preuve d'amour qu'elle / il vous ait donnée ?", mode: "seul" },
-      { id: "petits-bonheurs", label: "Décrivez votre ou vos petit(s) bonheur(s) du quotidien", mode: "seul" },
-      { id: "aventures", label: "Quelle(s) grande(s) aventure(s) avez-vous menée(s) ensemble ?", mode: "seul" },
-      { id: "epreuves", label: "Quelle(s) épreuve(s) avez-vous surmontée(s) ensemble ?", mode: "seul" },
-    ]
-  },
-  {
-    title: "Le mariage",
-    questions: [
-      { id: "pourquoi-marier", label: "Pourquoi avez-vous décidé de vous marier ?", mode: "seul" },
-      { id: "signification-union", label: "Que signifie cette union pour vous ?", mode: "seul" },
-      { id: "confiance-lien", label: "Qu'est-ce qui vous donne confiance en ce lien qui vous unit et en ce mariage à venir ?", mode: "seul" },
-    ]
-  },
-  {
-    title: "L'avenir",
-    questions: [
-      { id: "dans-20-ans", label: "Comment imaginez-vous votre couple dans 20 ans ?", mode: "ensemble" },
-      { id: "projet-fou", label: "Un projet fou à réaliser ensemble ?", mode: "ensemble" },
-      { id: "promesse", label: "Que souhaitez-vous lui promettre ?", mode: "ensemble" },
-    ]
-  },
-  {
-    title: "Votre cérémonie idéale",
-    questions: [
-      { id: "trois-mots", label: "À chaud, citez 3 mots pour décrire votre cérémonie d'engagement idéale", mode: "ensemble" },
-      { id: "partager-ceremonie", label: "Que souhaitez-vous partager à travers cette cérémonie ?", mode: "ensemble" },
-      { id: "rituels", label: "Les rituels, traditions ou passages indispensables à vos yeux ?", mode: "ensemble" },
-      { id: "discours-qui", label: "Idéalement, de qui voudriez-vous recevoir un discours ou tout type de participation ?", mode: "ensemble" },
-      { id: "sujets-eviter", label: "Lors des discours, est-ce qu'il y a des sujets que vous ne voulez pas voir abordés ?", mode: "seul" },
-    ]
-  },
+  { title: "Préparation de la cérémonie", questions: [
+    { id: "rencontre", label: "Racontez votre rencontre", mode: "seul" },
+    { id: "premiere-impression", label: "Qu'avez-vous pensé de l'autre en la / le voyant la première fois ?", mode: "seul" },
+    { id: "dit-a-amies", label: "Qu'avez-vous dit à son sujet à vos amies à cette époque ?", mode: "seul" },
+    { id: "anecdote-debut", label: "Une anecdote marquante de la période qui a précédé les débuts de votre relation ?", mode: "seul" },
+  ]},
+  { title: "Le couple", questions: [
+    { id: "aimez-chez-autre", label: "Qu'est-ce que vous aimez chez elle / lui ?", mode: "seul" },
+    { id: "differences", label: "En quoi êtes-vous différent·e·s ?", mode: "seul" },
+    { id: "enerve", label: "Qu'est-ce qui t'énerve chez elle / lui ?", mode: "seul" },
+    { id: "valeurs", label: "Quelles sont les valeurs essentielles que vous partagez ?", mode: "seul" },
+    { id: "craquer", label: "Qu'est-ce qui te fait craquer chez elle / lui ?", mode: "seul" },
+    { id: "appris", label: "Qu'avez-vous appris à ses côtés ?", mode: "seul" },
+  ]},
+  { title: "L'histoire", questions: [
+    { id: "preuve-amour", label: "Quelle est la plus belle preuve d'amour qu'elle / il vous ait donnée ?", mode: "seul" },
+    { id: "petits-bonheurs", label: "Décrivez votre ou vos petit(s) bonheur(s) du quotidien", mode: "seul" },
+    { id: "aventures", label: "Quelle(s) grande(s) aventure(s) avez-vous menée(s) ensemble ?", mode: "seul" },
+    { id: "epreuves", label: "Quelle(s) épreuve(s) avez-vous surmontée(s) ensemble ?", mode: "seul" },
+  ]},
+  { title: "Le mariage", questions: [
+    { id: "pourquoi-marier", label: "Pourquoi avez-vous décidé de vous marier ?", mode: "seul" },
+    { id: "signification-union", label: "Que signifie cette union pour vous ?", mode: "seul" },
+    { id: "confiance-lien", label: "Qu'est-ce qui vous donne confiance en ce lien qui vous unit et en ce mariage à venir ?", mode: "seul" },
+  ]},
+  { title: "L'avenir", questions: [
+    { id: "dans-20-ans", label: "Comment imaginez-vous votre couple dans 20 ans ?", mode: "ensemble" },
+    { id: "projet-fou", label: "Un projet fou à réaliser ensemble ?", mode: "ensemble" },
+    { id: "promesse", label: "Que souhaitez-vous lui promettre ?", mode: "ensemble" },
+  ]},
+  { title: "Votre cérémonie idéale", questions: [
+    { id: "trois-mots", label: "À chaud, citez 3 mots pour décrire votre cérémonie d'engagement idéale", mode: "ensemble" },
+    { id: "partager-ceremonie", label: "Que souhaitez-vous partager à travers cette cérémonie ?", mode: "ensemble" },
+    { id: "rituels", label: "Les rituels, traditions ou passages indispensables à vos yeux ?", mode: "ensemble" },
+    { id: "discours-qui", label: "Idéalement, de qui voudriez-vous recevoir un discours ou tout type de participation ?", mode: "ensemble" },
+    { id: "sujets-eviter", label: "Lors des discours, est-ce qu'il y a des sujets que vous ne voulez pas voir abordés ?", mode: "seul" },
+  ]},
 ];
-
 const MODE_LABEL = { seul: "À répondre seul·e", ensemble: "À répondre seul·e ou ensemble" };
+const ROLE_LABEL = { admin: "Admin", marie: "Marié·e", temoin: "Témoin / aide" };
+const DAY_LABEL = { 1: "Jour 1", 2: "Jour 2", 3: "Jour 3" };
 
-// ====== STATE ======
 let currentUser = null;
 let currentProfile = null;
-let activeTab = "form";
+let allProfiles = [];
+let activeTab = null;
+let activeDay = 1;
 
-// ====== DOM refs ======
 const authView = document.getElementById('auth-view');
 const appView = document.getElementById('app-view');
-const authTitle = document.getElementById('auth-title');
-const nameField = document.getElementById('name-field');
-const fullNameInput = document.getElementById('full-name');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 const authSubmit = document.getElementById('auth-submit');
 const authMsg = document.getElementById('auth-msg');
 const whoName = document.getElementById('who-name');
+const whoRole = document.getElementById('who-role');
 const tabsEl = document.getElementById('tabs');
-const formView = document.getElementById('form-view');
-const adminView = document.getElementById('admin-view');
+const tabContent = document.getElementById('tab-content');
 
 authSubmit.addEventListener('click', async () => {
   const email = emailInput.value.trim();
   const password = passwordInput.value;
-  authMsg.className = 'msg';
-  authMsg.textContent = '';
-
+  authMsg.className = 'msg'; authMsg.textContent = '';
   if(!email || !password){
-    authMsg.className = 'msg error';
-    authMsg.textContent = 'Merci de remplir email et mot de passe.';
+    authMsg.className = 'msg error'; authMsg.textContent = 'Merci de remplir email et mot de passe.';
     return;
   }
-
   authSubmit.disabled = true;
-  try{
-    const { error } = await sb.auth.signInWithPassword({ email, password });
-    if(error) throw error;
-  } catch(err){
-    authMsg.className = 'msg error';
-    authMsg.textContent = err.message || "Une erreur est survenue.";
-    authSubmit.disabled = false;
-    return;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if(error){
+    authMsg.className = 'msg error'; authMsg.textContent = error.message || "Une erreur est survenue.";
   }
   authSubmit.disabled = false;
 });
 
-document.getElementById('signout-btn').addEventListener('click', async () => {
-  await sb.auth.signOut();
-});
+document.getElementById('signout-btn').addEventListener('click', async () => { await sb.auth.signOut(); });
 
 sb.auth.onAuthStateChange((_event, session) => {
-  if(session){
-    handleLoggedIn(session.user);
-  } else {
-    currentUser = null;
-    currentProfile = null;
-    authView.classList.remove('hidden');
-    appView.classList.add('hidden');
-  }
+  if(session){ handleLoggedIn(session.user); }
+  else { currentUser = null; currentProfile = null; authView.classList.remove('hidden'); appView.classList.add('hidden'); }
 });
 
 async function handleLoggedIn(user){
   currentUser = user;
-  const { data: profile, error } = await sb
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single();
-
-  if(error){
-    console.error(error);
-  }
+  const { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).single();
   currentProfile = profile;
+
+  const { data: profiles } = await sb.from('profiles').select('*');
+  allProfiles = profiles || [];
 
   authView.classList.add('hidden');
   appView.classList.remove('hidden');
   whoName.textContent = (profile && profile.full_name) ? profile.full_name : user.email;
+  whoRole.textContent = profile ? (ROLE_LABEL[profile.role] || profile.role) : '';
 
   renderTabs();
-  activeTab = 'form';
-  showTab('form');
+}
+
+function tabsForRole(role){
+  if(role === 'admin') return [{ id: 'admin', label: 'Vue admin' }, { id: 'planning', label: 'Planning' }];
+  if(role === 'marie') return [{ id: 'form', label: 'Mon formulaire' }, { id: 'planning', label: 'Planning' }];
+  if(role === 'temoin') return [{ id: 'speech', label: 'Mon discours' }, { id: 'planning', label: 'Planning (lecture seule)' }];
+  return [];
 }
 
 function renderTabs(){
+  const role = currentProfile ? currentProfile.role : 'temoin';
+  const tabs = tabsForRole(role);
   tabsEl.innerHTML = '';
-  const formBtn = document.createElement('button');
-  formBtn.className = 'tab-btn active';
-  formBtn.textContent = 'Mon formulaire';
-  formBtn.addEventListener('click', () => showTab('form'));
-  tabsEl.appendChild(formBtn);
-
-  if(currentProfile && currentProfile.is_admin){
-    const adminBtn = document.createElement('button');
-    adminBtn.className = 'tab-btn';
-    adminBtn.textContent = 'Vue admin';
-    adminBtn.addEventListener('click', () => showTab('admin'));
-    tabsEl.appendChild(adminBtn);
-  }
-}
-
-function showTab(tab){
-  activeTab = tab;
-  [...tabsEl.children].forEach((btn, i) => {
-    btn.classList.toggle('active', (tab === 'form' && i === 0) || (tab === 'admin' && i === 1));
+  tabs.forEach((tab, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+    btn.textContent = tab.label;
+    btn.addEventListener('click', () => showTab(tab.id));
+    tabsEl.appendChild(btn);
   });
-  formView.classList.toggle('hidden', tab !== 'form');
-  adminView.classList.toggle('hidden', tab !== 'admin');
-  if(tab === 'form') renderForm();
-  if(tab === 'admin') renderAdmin();
+  if(tabs.length) showTab(tabs[0].id);
 }
 
-// ====== FORM (own answers) ======
+function showTab(tabId){
+  activeTab = tabId;
+  const tabs = tabsForRole(currentProfile.role);
+  [...tabsEl.children].forEach((btn, i) => {
+    btn.classList.toggle('active', tabs[i] && tabs[i].id === tabId);
+  });
+  if(tabId === 'form') renderForm();
+  if(tabId === 'speech') renderSpeech();
+  if(tabId === 'planning') renderPlanning();
+  if(tabId === 'admin') renderAdmin();
+}
+
+// ---------- FORM (rôle marié) ----------
 async function renderForm(){
-  formView.innerHTML = '<p class="center-note">Chargement…</p>';
-
-  const { data: answers, error } = await sb
-    .from('ceremony_answers')
-    .select('question_id, answer')
-    .eq('user_id', currentUser.id);
-
-  if(error){
-    formView.innerHTML = '<p class="center-note">Erreur de chargement. Recharge la page.</p>';
-    console.error(error);
-    return;
-  }
+  tabContent.innerHTML = '<p class="center-note">Chargement…</p>';
+  const { data: answers, error } = await sb.from('ceremony_answers').select('question_id, answer').eq('user_id', currentUser.id);
+  if(error){ tabContent.innerHTML = '<p class="center-note">Erreur de chargement.</p>'; console.error(error); return; }
 
   const answerMap = {};
   (answers || []).forEach(a => { answerMap[a.question_id] = a.answer; });
 
-  formView.innerHTML = '';
+  tabContent.innerHTML = '';
   CATEGORIES.forEach(cat => {
     const catEl = document.createElement('div');
     catEl.className = 'cat';
-    const h2 = document.createElement('h2');
-    h2.textContent = cat.title;
-    catEl.appendChild(h2);
-
+    catEl.innerHTML = `<h2>${cat.title}</h2>`;
     cat.questions.forEach(q => {
       const qEl = document.createElement('div');
       qEl.className = 'q';
       qEl.innerHTML = `
         <p class="q-label">${q.label}</p>
         <p class="q-mode">${MODE_LABEL[q.mode]}</p>
-        <textarea data-qid="${q.id}" placeholder="Ta réponse…"></textarea>
+        <textarea placeholder="Ta réponse…"></textarea>
         <p class="save-state"></p>
       `;
       const textarea = qEl.querySelector('textarea');
       textarea.value = answerMap[q.id] || '';
       const saveState = qEl.querySelector('.save-state');
-
       let debounceTimer;
+      const doSave = () => saveAnswer(q.id, textarea.value, saveState);
       textarea.addEventListener('input', () => {
-        saveState.textContent = 'Frappe en cours…';
-        saveState.classList.remove('saved');
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => saveAnswer(q.id, textarea.value, saveState), 900);
+        saveState.textContent = 'Frappe en cours…'; saveState.classList.remove('saved');
+        clearTimeout(debounceTimer); debounceTimer = setTimeout(doSave, 900);
       });
-      textarea.addEventListener('blur', () => {
-        clearTimeout(debounceTimer);
-        saveAnswer(q.id, textarea.value, saveState);
-      });
-
+      textarea.addEventListener('blur', () => { clearTimeout(debounceTimer); doSave(); });
       catEl.appendChild(qEl);
     });
-
-    formView.appendChild(catEl);
+    tabContent.appendChild(catEl);
   });
 }
 
 async function saveAnswer(questionId, value, saveStateEl){
   saveStateEl.textContent = 'Enregistrement…';
-  const { error } = await sb
-    .from('ceremony_answers')
-    .upsert({
-      user_id: currentUser.id,
-      question_id: questionId,
-      answer: value,
-      updated_at: new Date().toISOString()
-    }, { onConflict: 'user_id,question_id' });
-
-  if(error){
-    saveStateEl.textContent = "Erreur d'enregistrement";
-    console.error(error);
-  } else {
-    saveStateEl.textContent = 'Enregistré ✓';
-    saveStateEl.classList.add('saved');
-  }
+  const { error } = await sb.from('ceremony_answers').upsert({
+    user_id: currentUser.id, question_id: questionId, answer: value, updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,question_id' });
+  if(error){ saveStateEl.textContent = "Erreur d'enregistrement"; console.error(error); }
+  else { saveStateEl.textContent = 'Enregistré ✓'; saveStateEl.classList.add('saved'); }
 }
 
-// ====== ADMIN VIEW ======
-async function renderAdmin(){
-  adminView.innerHTML = '<p class="center-note">Chargement…</p>';
+// ---------- SPEECH (rôle témoin) ----------
+async function renderSpeech(){
+  tabContent.innerHTML = '<p class="center-note">Chargement…</p>';
+  const { data, error } = await sb.from('speeches').select('content').eq('user_id', currentUser.id).maybeSingle();
+  if(error){ tabContent.innerHTML = '<p class="center-note">Erreur de chargement.</p>'; console.error(error); return; }
 
-  const { data: profiles, error: pErr } = await sb.from('profiles').select('*');
-  const { data: answers, error: aErr } = await sb.from('ceremony_answers').select('*');
+  tabContent.innerHTML = `
+    <h2 class="section-title">Ton discours</h2>
+    <div class="q">
+      <p class="q-mode">Écris et modifie ton discours autant que tu veux, il est sauvegardé automatiquement.</p>
+      <textarea id="speech-textarea" style="min-height: 260px;" placeholder="Écris ton discours ici…"></textarea>
+      <p class="save-state" id="speech-save-state"></p>
+    </div>
+  `;
+  const textarea = document.getElementById('speech-textarea');
+  const saveState = document.getElementById('speech-save-state');
+  textarea.value = (data && data.content) || '';
 
-  if(pErr || aErr){
-    adminView.innerHTML = '<p class="center-note">Erreur de chargement.</p>';
-    console.error(pErr, aErr);
-    return;
-  }
+  let debounceTimer;
+  const doSave = async () => {
+    saveState.textContent = 'Enregistrement…';
+    const { error } = await sb.from('speeches').upsert({
+      user_id: currentUser.id, content: textarea.value, updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id' });
+    if(error){ saveState.textContent = "Erreur d'enregistrement"; console.error(error); }
+    else { saveState.textContent = 'Enregistré ✓'; saveState.classList.add('saved'); }
+  };
+  textarea.addEventListener('input', () => {
+    saveState.textContent = 'Frappe en cours…'; saveState.classList.remove('saved');
+    clearTimeout(debounceTimer); debounceTimer = setTimeout(doSave, 900);
+  });
+  textarea.addEventListener('blur', () => { clearTimeout(debounceTimer); doSave(); });
+}
 
-  const answersByUser = {};
-  (answers || []).forEach(a => {
-    if(!answersByUser[a.user_id]) answersByUser[a.user_id] = {};
-    answersByUser[a.user_id][a.question_id] = a.answer;
+// ---------- PLANNING (tous les rôles) ----------
+async function renderPlanning(){
+  const canEdit = currentProfile.role === 'marie' || currentProfile.role === 'admin';
+  tabContent.innerHTML = '<p class="center-note">Chargement…</p>';
+
+  const { data: tasks, error } = await sb.from('planning_tasks').select('*').order('time', { ascending: true });
+  if(error){ tabContent.innerHTML = '<p class="center-note">Erreur de chargement.</p>'; console.error(error); return; }
+
+  tabContent.innerHTML = `
+    <h2 class="section-title">Planning du weekend</h2>
+    <div class="day-tabs" id="day-tabs"></div>
+    <div id="day-content"></div>
+  `;
+  const dayTabsEl = document.getElementById('day-tabs');
+  [1,2,3].forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'day-tab' + (d === activeDay ? ' active' : '');
+    btn.textContent = DAY_LABEL[d];
+    btn.addEventListener('click', () => { activeDay = d; renderPlanning(); });
+    dayTabsEl.appendChild(btn);
   });
 
-  adminView.innerHTML = '';
-  (profiles || []).forEach(profile => {
+  const dayContent = document.getElementById('day-content');
+  const dayTasks = (tasks || []).filter(t => t.day === activeDay);
+
+  if(canEdit){
+    const addBtn = document.createElement('button');
+    addBtn.className = 'btn-small add-task-btn';
+    addBtn.textContent = '+ Ajouter une tâche';
+    addBtn.addEventListener('click', () => showTaskForm(dayContent, null));
+    dayContent.appendChild(addBtn);
+  }
+
+  if(!dayTasks.length){
+    const p = document.createElement('p');
+    p.className = 'empty-note';
+    p.textContent = 'Aucune tâche pour ce jour pour le moment.';
+    dayContent.appendChild(p);
+  }
+
+  dayTasks.forEach(task => {
+    const card = document.createElement('div');
+    card.className = 'task-card';
+    const assigneesHtml = (task.assignees || []).map(a => `<span class="chip">${escapeHtml(a)}</span>`).join('');
+    card.innerHTML = `
+      <div class="task-top">
+        <div>
+          ${task.time ? `<p class="task-time">${escapeHtml(task.time)}</p>` : ''}
+          <p class="task-title">${escapeHtml(task.title)}</p>
+          ${task.description ? `<p class="task-desc">${escapeHtml(task.description)}</p>` : ''}
+          <div class="task-assignees">${assigneesHtml}</div>
+        </div>
+        <div class="task-actions"></div>
+      </div>
+    `;
+    if(canEdit){
+      const actions = card.querySelector('.task-actions');
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn-ghost'; editBtn.textContent = 'Modifier';
+      editBtn.addEventListener('click', () => showTaskForm(dayContent, task, card));
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-danger'; delBtn.textContent = 'Supprimer';
+      delBtn.addEventListener('click', async () => {
+        if(confirm('Supprimer cette tâche ?')){
+          await sb.from('planning_tasks').delete().eq('id', task.id);
+          renderPlanning();
+        }
+      });
+      actions.appendChild(editBtn); actions.appendChild(delBtn);
+    }
+    dayContent.appendChild(card);
+  });
+}
+
+function showTaskForm(container, existingTask, replaceCard){
+  const form = document.createElement('div');
+  form.className = 'task-form';
+  form.innerHTML = `
+    <div class="field"><label>Heure (optionnel)</label><input type="text" id="tf-time" placeholder="ex. 14h00"></div>
+    <div class="field"><label>Titre de la tâche</label><input type="text" id="tf-title" placeholder="ex. Installation de la salle"></div>
+    <div class="field"><label>Description (optionnel)</label><input type="text" id="tf-desc" placeholder="Détails utiles"></div>
+    <div class="field"><label>Personnes assignées (séparées par une virgule)</label><input type="text" id="tf-assignees" placeholder="ex. Julie, Marc"></div>
+    <div class="task-form-actions">
+      <button class="btn-small" id="tf-save">Enregistrer</button>
+      <button class="btn-ghost" id="tf-cancel">Annuler</button>
+    </div>
+  `;
+  if(replaceCard) replaceCard.replaceWith(form);
+  else container.insertBefore(form, container.children[1] || null);
+
+  if(existingTask){
+    form.querySelector('#tf-time').value = existingTask.time || '';
+    form.querySelector('#tf-title').value = existingTask.title || '';
+    form.querySelector('#tf-desc').value = existingTask.description || '';
+    form.querySelector('#tf-assignees').value = (existingTask.assignees || []).join(', ');
+  }
+
+  form.querySelector('#tf-cancel').addEventListener('click', () => renderPlanning());
+  form.querySelector('#tf-save').addEventListener('click', async () => {
+    const title = form.querySelector('#tf-title').value.trim();
+    if(!title){ alert('Le titre est obligatoire.'); return; }
+    const payload = {
+      day: activeDay,
+      time: form.querySelector('#tf-time').value.trim(),
+      title,
+      description: form.querySelector('#tf-desc').value.trim(),
+      assignees: form.querySelector('#tf-assignees').value.split(',').map(s => s.trim()).filter(Boolean),
+      updated_at: new Date().toISOString()
+    };
+    if(existingTask){
+      await sb.from('planning_tasks').update(payload).eq('id', existingTask.id);
+    } else {
+      payload.created_by = currentUser.id;
+      await sb.from('planning_tasks').insert(payload);
+    }
+    renderPlanning();
+  });
+}
+
+// ---------- ADMIN VIEW ----------
+async function renderAdmin(){
+  tabContent.innerHTML = '<p class="center-note">Chargement…</p>';
+
+  const { data: answers } = await sb.from('ceremony_answers').select('*');
+  const { data: speeches } = await sb.from('speeches').select('*');
+
+  const answersByUser = {};
+  (answers || []).forEach(a => { (answersByUser[a.user_id] ||= {})[a.question_id] = a.answer; });
+  const speechByUser = {};
+  (speeches || []).forEach(s => { speechByUser[s.user_id] = s.content; });
+
+  tabContent.innerHTML = '<h2 class="section-title">Formulaires des mariés</h2>';
+  const maries = allProfiles.filter(p => p.role === 'marie');
+  if(!maries.length){
+    tabContent.innerHTML += '<p class="empty-note">Aucun compte marié pour le moment.</p>';
+  }
+  maries.forEach(profile => {
     const userAnswers = answersByUser[profile.id] || {};
     const block = document.createElement('div');
     block.className = 'member-block';
-    block.innerHTML = `
-      <h2>${profile.full_name || '(sans nom)'}</h2>
-      <p class="member-email">${profile.is_admin ? 'Admin' : 'Membre'}</p>
-    `;
-
+    block.innerHTML = `<h2>${escapeHtml(profile.full_name || '(sans nom)')}</h2><p class="member-role">${ROLE_LABEL[profile.role]}</p>`;
     CATEGORIES.forEach(cat => {
       const catBlock = document.createElement('div');
       catBlock.className = 'a-cat';
-      const h3 = document.createElement('h3');
-      h3.textContent = cat.title;
-      catBlock.appendChild(h3);
-
+      catBlock.innerHTML = `<h3>${cat.title}</h3>`;
       cat.questions.forEach(q => {
         const val = userAnswers[q.id];
         const qBlock = document.createElement('div');
         qBlock.className = 'a-q';
-        qBlock.innerHTML = `
-          <p class="a-q-label">${q.label}</p>
-          <p class="a-q-answer ${val ? '' : 'empty'}">${val ? escapeHtml(val) : '(pas encore répondu)'}</p>
-        `;
+        qBlock.innerHTML = `<p class="a-q-label">${q.label}</p><p class="a-q-answer ${val ? '' : 'empty'}">${val ? escapeHtml(val) : '(pas encore répondu)'}</p>`;
         catBlock.appendChild(qBlock);
       });
-
       block.appendChild(catBlock);
     });
+    tabContent.appendChild(block);
+  });
 
-    adminView.appendChild(block);
+  const speechSection = document.createElement('h2');
+  speechSection.className = 'section-title';
+  speechSection.style.marginTop = '20px';
+  speechSection.textContent = 'Discours des témoins';
+  tabContent.appendChild(speechSection);
+
+  const temoins = allProfiles.filter(p => p.role === 'temoin');
+  if(!temoins.length){
+    const p = document.createElement('p');
+    p.className = 'empty-note';
+    p.textContent = 'Aucun témoin/aide pour le moment.';
+    tabContent.appendChild(p);
+  }
+  temoins.forEach(profile => {
+    const content = speechByUser[profile.id];
+    const block = document.createElement('div');
+    block.className = 'member-block';
+    block.innerHTML = `
+      <h2>${escapeHtml(profile.full_name || '(sans nom)')}</h2>
+      <p class="member-role">${ROLE_LABEL[profile.role]}</p>
+      <p class="a-q-answer ${content ? '' : 'empty'}">${content ? escapeHtml(content) : '(pas encore écrit)'}</p>
+    `;
+    tabContent.appendChild(block);
   });
 }
 
@@ -588,12 +593,9 @@ function escapeHtml(str){
   return div.innerHTML;
 }
 
-// ====== INIT ======
 (async function init(){
   const { data: { session } } = await sb.auth.getSession();
-  if(session){
-    handleLoggedIn(session.user);
-  }
+  if(session) handleLoggedIn(session.user);
 })();
 </script>
 
